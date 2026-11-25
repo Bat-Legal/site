@@ -287,7 +287,7 @@ var root=document.documentElement,$=function(s,c){return (c||document).querySele
 var rm=window.matchMedia('(prefers-reduced-motion: reduce)').matches,LANG=root.lang==='en'?'en':'ar';
 $$('.ag-av img').forEach(function(i){var ok=function(){i.classList.add('loaded')},no=function(){if(i.parentNode)i.parentNode.removeChild(i)};if(i.complete){if(i.naturalWidth)ok();else no()}else{i.addEventListener('load',ok);i.addEventListener('error',no)}});
 function setLang(l){LANG=l;root.lang=l;root.dir=l==='ar'?'rtl':'ltr';try{localStorage.setItem('bat-lang',l)}catch(e){}$$('[data-l-ar]').forEach(function(el){el.setAttribute('aria-label',el.getAttribute('data-l-'+l))});document.title=l==='ar'?'بَتّ: فريق ذكي يُنجز عمل مكتبك، وأنت تعتمد':'Bat: an AI team does your firm’s work. You approve.'}
-$$('.lang').forEach(function(b){b.addEventListener('click',function(){setLang(LANG==='ar'?'en':'ar');route()})});
+$$('.lang').forEach(function(b){b.addEventListener('click',function(){var n=LANG==='ar'?'en':'ar';setLang(n);try{history.replaceState(null,'','#'+(n==='en'?'en'+(cur==='home'?'':'-'+cur):cur))}catch(e){}route()})});
 $$('.theme').forEach(function(b){b.addEventListener('click',function(){var n=root.dataset.theme==='dark'?'light':'dark';root.dataset.theme=n;try{localStorage.setItem('bat-theme',n)}catch(e){}})});
 
 /* a scene: each .t appears at its time, then the scene's own states (pressed, approved) */
