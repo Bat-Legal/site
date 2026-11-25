@@ -332,9 +332,9 @@ form{display:block}fieldset{border:0;margin:0;padding:0;min-width:0}legend{paddi
 /* Where answers are sent. */
 const FORM_ENDPOINT = "https://formsubmit.co/ajax/hello@try-bat.com";
 /* VIDEO_SRC: put the path or URL of the real demo clip here (for example "demo.mp4"). Empty = the "coming soon" poster. */
-const VIDEO_SRC = ""; // set to "bat-demo-web.mp4" once the clip is uploaded next to this file
+const VIDEO_SRC = "../assets/bat-demo-web.mp4";
 /* Poster image shown before the video plays. */
-const VIDEO_POSTER = "bat-demo-poster.jpg";
+const VIDEO_POSTER = "../assets/bat-demo-poster.jpg";
 (function(){
 var root=document.documentElement,$=function(s,c){return (c||document).querySelector(s)},$$=function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s))};
 var rm=window.matchMedia('(prefers-reduced-motion: reduce)').matches,LANG=root.lang==='en'?'en':'ar',KEY='bat-survey-v1',QS=new URLSearchParams(location.search),TEST=QS.get('test')==='1';
