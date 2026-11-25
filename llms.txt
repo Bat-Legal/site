@@ -1,0 +1,15 @@
+# Bat (بَتّ)
+
+> Bat is a law-firm management system for Saudi law firms, with a team of AI agents inside it. The agents read court notices and propose dates and tasks, draft memos that cite the article and source for every point, prepare hearing packs, and keep clients updated on WhatsApp. The lawyer approves everything before it is sent or changed. Arabic first, Hijri and Gregorian dates.
+
+Slogan: «المحامي يترافع، وبتّ يتابع» (You take the hearing. Bat takes the rest.)
+Status: pre-launch; founding law firms can book a demo.
+Bat is an independent product, not affiliated with the Ministry of Justice or the Najiz platform.
+
+## Links
+- [Website](https://try-bat.com/): product overview (Arabic and English)
+- [Book a demo](https://try-bat.com/#demo)
+- [LinkedIn](https://www.linkedin.com/company/batlegalsa)
+- [X](https://x.com/batlegalsa)
+- [Instagram](https://www.instagram.com/batlegalsa/)
+- Contact: hello@try-bat.com
