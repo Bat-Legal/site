@@ -340,9 +340,10 @@ form{display:block}fieldset{border:0;margin:0;padding:0;min-width:0}legend{paddi
 /* Where answers are sent. */
 const FORM_ENDPOINT = "https://formsubmit.co/ajax/hello@try-bat.com";
 /* VIDEO_SRC: put the path or URL of the real demo clip here (for example "demo.mp4"). Empty = the "coming soon" poster. */
-const VIDEO_SRC = "../assets/bat-demo-web.mp4";
+/* one clip per language: Arabic UI for ar, English UI for en */
+const VIDEO_SRC = {ar:"../assets/bat-demo-ar.mp4", en:"../assets/bat-demo-web.mp4"};
 /* Poster image shown before the video plays. */
-const VIDEO_POSTER = "../assets/bat-demo-poster.jpg";
+const VIDEO_POSTER = {ar:"../assets/bat-demo-ar-poster.jpg", en:"../assets/bat-demo-poster.jpg"};
 (function(){
 var root=document.documentElement,$=function(s,c){return (c||document).querySelector(s)},$$=function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s))};
 var rm=window.matchMedia('(prefers-reduced-motion: reduce)').matches,LANG=root.lang==='en'?'en':'ar',KEY='bat-survey-v1',QS=new URLSearchParams(location.search),TEST=QS.get('test')==='1';
@@ -352,7 +353,7 @@ function west(s){return String(s||'').replace(/[٠-٩]/g,function(d){return '٠�
 function say(a,e){live.textContent='';setTimeout(function(){live.textContent=LANG==='ar'?a:e},30)}
 $$('.ag-av img').forEach(function(i){var ok=function(){i.classList.add('loaded')},no=function(){if(i.parentNode)i.parentNode.removeChild(i)};if(i.complete){if(i.naturalWidth)ok();else no()}else{i.addEventListener('load',ok);i.addEventListener('error',no)}});
 function progress(){var p=$('#prog'),on=cur>=1&&cur<=6;p.hidden=!on;if(!on)return;$('#progT').textContent=LANG==='ar'?'الخطوة '+ard(cur)+' من '+ard(6):'Step '+cur+' of 6';var b=$('#progB');b.setAttribute('aria-valuenow',cur);b.setAttribute('aria-valuetext',$('#progT').textContent);$('i',b).style.width=(cur/6*100)+'%'}
-function setLang(l){LANG=l;root.lang=l;root.dir=l==='ar'?'rtl':'ltr';try{localStorage.setItem('bat-lang',l)}catch(e){}$$('[data-l-ar]').forEach(function(el){el.setAttribute('aria-label',el.getAttribute('data-l-'+l))});document.title=l==='ar'?'استبيان بَتّ: ساعدنا في بناء بتّ لمكتبك':'Bat survey: help us build Bat for your firm';progress()}
+function setLang(l){LANG=l;root.lang=l;root.dir=l==='ar'?'rtl':'ltr';try{localStorage.setItem('bat-lang',l)}catch(e){}$$('[data-l-ar]').forEach(function(el){el.setAttribute('aria-label',el.getAttribute('data-l-'+l))});document.title=l==='ar'?'استبيان بَتّ: ساعدنا في بناء بتّ لمكتبك':'Bat survey: help us build Bat for your firm';progress();if(typeof setVideo==='function')setVideo()}
 $$('.lang').forEach(function(b){b.addEventListener('click',function(){setLang(LANG==='ar'?'en':'ar')})});
 $$('.theme').forEach(function(b){b.addEventListener('click',function(){var n=root.dataset.theme==='dark'?'light':'dark';root.dataset.theme=n;try{localStorage.setItem('bat-theme',n)}catch(e){}})});
 
@@ -375,7 +376,7 @@ function play(s){
   if(s.dataset.loop)s._tm.push(setTimeout(function(){s._tm=[];if(s._in)play(s)},+s.dataset.loop));
 }
 /* video slot: stays a "coming soon" poster until VIDEO_SRC is set */
-if(VIDEO_SRC){var vd=$('#demoVideo');if(VIDEO_POSTER)vd.poster=VIDEO_POSTER;vd.src=VIDEO_SRC;vd.hidden=false;$('#videoPoster').hidden=true}
+function setVideo(){var vd=$('#demoVideo'),src=VIDEO_SRC&&VIDEO_SRC[LANG];if(!src)return;if(vd.getAttribute('src')===src)return;vd.pause();vd.poster=VIDEO_POSTER[LANG]||'';vd.src=src;vd.hidden=false;$('#videoPoster').hidden=true}
 
 /* answers: read, save, restore */
 function names(){var o={};$$('input[name],textarea[name]',form).forEach(function(i){if(i.name!=='_honey')o[i.name]=1});return Object.keys(o)}
@@ -422,7 +423,7 @@ form.addEventListener('submit',function(ev){ev.preventDefault();if(cur!==6){if(c
   if(TEST){console.log('BAT SURVEY PAYLOAD (test mode, nothing was sent)\n'+JSON.stringify(p,null,2));done(trial);return}
   form.classList.add('busy');
   fetch(FORM_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(p)}).then(function(r){if(!r.ok)throw new Error('send failed');done(trial)}).catch(function(){form.classList.remove('busy');fail.hidden=false;save()})});
-var start=restore();sync();setLang(LANG);show(start,false);
+var start=restore();sync();setLang(LANG);setVideo();show(start,false);
 if(start>0){var r=document.createElement('div');r.className='sv-resume';r.setAttribute('role','status');r.innerHTML='<span><span class="ar">أكملنا لك من حيث توقّفت، وإجاباتك السابقة محفوظة.</span><span class="en">We picked up where you left off. Your earlier answers are saved.</span></span><button type="button"><span class="ar">ابدأ من جديد</span><span class="en">Start over</span></button>';steps[start].insertBefore(r,steps[start].children[1]);$('button',r).addEventListener('click',function(){try{localStorage.removeItem(KEY)}catch(e){}location.href=location.pathname+location.search})}
 })();
 </script>
